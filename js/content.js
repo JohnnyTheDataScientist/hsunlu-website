@@ -49,6 +49,6 @@ window.SITE_CONTENT = {
     { title: '雲朵造型 壓克力發光應援牌', category: '活動宣導', img: 'cloud-acrylic-sign.webp' },
     { title: '稅務代理人節 水晶獎牌', category: '獎牌獎座', img: 'tax-agent-crystal-award.webp' },
     { title: '琥珀龍 水晶賀牌', category: '獎牌獎座', img: 'amber-dragon-plaque.webp' },
-    { title: '紀念名牌 立架', category: '獎牌獎座', img: 'ncc-gold-nameplate.webp' },
+    { title: 'NCC 國家通訊傳播委員會 水晶紀念牌', category: '獎牌獎座', img: 'ncc-crystal-plaque.webp' },
   ],
 };
