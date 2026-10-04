@@ -1,0 +1,55 @@
+<!--meta
+{
+  "title": "線上詢價｜光路國際有限公司",
+  "description": "填寫禮贈品詢價需求，光路國際將盡快回覆並提供建議方案與報價。",
+  "page": "inquiry",
+  "scripts": ["js/inquiry.js"],
+  "noindex": true
+}
+-->
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="目前位置"><a href="index.html">首頁</a><span>線上詢價</span></nav>
+        <h1>線上詢價</h1>
+        <p><span class="ph">告訴我們送給誰、什麼場合、預算與數量，</span><span class="ph">我們會盡快回覆建議方案與報價。</span></p>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container inquiry">
+        <div class="inquiry-items">
+          <div class="inquiry-items-head">
+            <h2>詢價清單</h2>
+            <button type="button" class="link-btn" id="basket-clear" hidden>清空</button>
+          </div>
+          <ul class="basket-list" id="basket-list"></ul>
+          <div class="basket-empty" id="basket-empty" hidden>
+            <p>詢價籃目前是空的。</p>
+            <p>可以先到 <a href="products.html">產品展示</a> 挑選商品，或直接在右邊描述您的需求。</p>
+          </div>
+        </div>
+
+        <form class="inquiry-form" id="inquiry-form" novalidate>
+          <h2>聯絡資料與需求</h2>
+          <div class="field-row">
+            <label class="field"><span>公司／單位名稱</span><input name="公司單位" autocomplete="organization"></label>
+            <label class="field"><span>聯絡人 <em>*</em></span><input name="聯絡人" required autocomplete="name"></label>
+          </div>
+          <div class="field-row">
+            <label class="field"><span>Email <em>*</em></span><input name="email" type="email" required autocomplete="email"></label>
+            <label class="field"><span>電話 <em>*</em></span><input name="電話" type="tel" required autocomplete="tel"></label>
+          </div>
+          <div class="field-row">
+            <label class="field"><span>預算（每份）</span><input name="預算" placeholder="例如：300～500 元"></label>
+            <label class="field"><span>希望交貨日期</span><input name="希望交期" type="date"></label>
+          </div>
+          <label class="field"><span>需求說明 <em>*</em></span>
+            <textarea name="需求說明" rows="6" required placeholder="例如：送給客戶的年節禮，約 200 份，需要印公司 Logo，希望有質感的禮盒包裝。"></textarea>
+          </label>
+          <input type="text" name="_honey" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <p class="form-note">送出後，詢價內容會寄到我們的信箱，我們會以 Email 或電話回覆您。</p>
+          <button type="submit" class="btn btn-dark" id="inquiry-submit">送出詢價</button>
+          <div class="form-status" id="form-status" role="status" hidden></div>
+        </form>
+      </div>
+    </section>

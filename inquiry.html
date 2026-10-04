@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>線上詢價｜光路國際有限公司</title>
+  <meta name="description" content="填寫禮贈品詢價需求，光路國際將盡快回覆並提供建議方案與報價。">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://hsunlu.com/inquiry.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="線上詢價｜光路國際有限公司">
+  <meta property="og:description" content="填寫禮贈品詢價需求，光路國際將盡快回覆並提供建議方案與報價。">
+  <meta property="og:image" content="https://hsunlu.com/img/cases/taipei-city-council-gift-set.webp">
+  <meta property="og:url" content="https://hsunlu.com/inquiry.html">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=81fd9718">
+</head>
+<body data-page="inquiry" data-root="">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-brand" href="index.html" aria-label="光路國際 首頁">
+        <span class="brand-name">光路國際</span>
+        <span class="brand-sub">禮贈品客製</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="開啟選單">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="site-nav" class="site-nav">
+        <a href="index.html#about">關於我們</a>
+        <a href="products.html">產品展示</a>
+        <a href="cases.html">合作案例</a>
+        <a href="index.html#brand">馴鹿品牌</a>
+        <a href="index.html#contact">聯絡我們</a>
+        <a class="btn btn-dark btn-sm nav-basket" href="inquiry.html">詢價籃<span class="basket-count" data-basket-count hidden>0</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+<section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="目前位置"><a href="index.html">首頁</a><span>線上詢價</span></nav>
+        <h1>線上詢價</h1>
+        <p><span class="ph">告訴我們送給誰、什麼場合、預算與數量，</span><span class="ph">我們會盡快回覆建議方案與報價。</span></p>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container inquiry">
+        <div class="inquiry-items">
+          <div class="inquiry-items-head">
+            <h2>詢價清單</h2>
+            <button type="button" class="link-btn" id="basket-clear" hidden>清空</button>
+          </div>
+          <ul class="basket-list" id="basket-list"></ul>
+          <div class="basket-empty" id="basket-empty" hidden>
+            <p>詢價籃目前是空的。</p>
+            <p>可以先到 <a href="products.html">產品展示</a> 挑選商品，或直接在右邊描述您的需求。</p>
+          </div>
+        </div>
+
+        <form class="inquiry-form" id="inquiry-form" novalidate>
+          <h2>聯絡資料與需求</h2>
+          <div class="field-row">
+            <label class="field"><span>公司／單位名稱</span><input name="公司單位" autocomplete="organization"></label>
+            <label class="field"><span>聯絡人 <em>*</em></span><input name="聯絡人" required autocomplete="name"></label>
+          </div>
+          <div class="field-row">
+            <label class="field"><span>Email <em>*</em></span><input name="email" type="email" required autocomplete="email"></label>
+            <label class="field"><span>電話 <em>*</em></span><input name="電話" type="tel" required autocomplete="tel"></label>
+          </div>
+          <div class="field-row">
+            <label class="field"><span>預算（每份）</span><input name="預算" placeholder="例如：300～500 元"></label>
+            <label class="field"><span>希望交貨日期</span><input name="希望交期" type="date"></label>
+          </div>
+          <label class="field"><span>需求說明 <em>*</em></span>
+            <textarea name="需求說明" rows="6" required placeholder="例如：送給客戶的年節禮，約 200 份，需要印公司 Logo，希望有質感的禮盒包裝。"></textarea>
+          </label>
+          <input type="text" name="_honey" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <p class="form-note">送出後，詢價內容會寄到我們的信箱，我們會以 Email 或電話回覆您。</p>
+          <button type="submit" class="btn btn-dark" id="inquiry-submit">送出詢價</button>
+          <div class="form-status" id="form-status" role="status" hidden></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-about">
+        <p class="footer-name">光路國際有限公司</p>
+        <p><span class="ph">企業禮贈 ・ 政府機關 ・</span> <span class="ph">團體採購 ・ 專案客製</span></p>
+        <p>旗下品牌：馴鹿 HSUNLU</p>
+      </div>
+      <nav class="footer-col" aria-label="快速連結">
+        <p class="footer-col-title">快速連結</p>
+          <a href="index.html#about">關於我們</a>
+          <a href="products.html">產品展示</a>
+          <a href="cases.html">合作案例</a>
+          <a href="index.html#brand">馴鹿品牌</a>
+          <a href="index.html#contact">聯絡我們</a>
+          <a href="inquiry.html">線上詢價</a>
+      </nav>
+      <nav class="footer-col footer-cats" aria-label="產品分類">
+        <p class="footer-col-title">產品分類</p>
+          <a href="products.html?cat=杯瓶器皿">杯瓶器皿</a>
+          <a href="products.html?cat=包袋收納">包袋收納</a>
+          <a href="products.html?cat=文具用品">文具用品</a>
+          <a href="products.html?cat=3C 科技">3C 科技</a>
+          <a href="products.html?cat=廚房餐具">廚房餐具</a>
+          <a href="products.html?cat=戶外休閒">戶外休閒</a>
+          <a href="products.html?cat=居家生活">居家生活</a>
+          <a href="products.html?cat=健康美容">健康美容</a>
+          <a href="products.html?cat=食品伴手禮">食品伴手禮</a>
+      </nav>
+      <div class="footer-col">
+        <p class="footer-col-title">聯絡資訊</p>
+        <a href="mailto:costin1025@gmail.com">costin1025@gmail.com</a>
+        <a href="tel:+886966578635">0966-578-635</a>
+        <span><span class="ph">台北市內湖區</span><span class="ph">東湖路113巷70弄8之1號</span></span>
+      </div>
+      <p class="copyright">© <span id="year">2026</span> 光路國際有限公司</p>
+    </div>
+  </footer>
+
+  <div class="line-float-wrap">
+    <div class="line-pop" aria-hidden="true">
+      <p>手機掃描加入 LINE 好友</p>
+      <img src="img/line-qr-float.png" alt="" width="540" height="540" loading="lazy">
+    </div>
+    <a class="line-float" href="https://lin.ee/OQbMsMr" target="_blank" rel="noopener" aria-label="LINE 線上諮詢">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 3.96 3.6 7.28 8.46 7.9.33.07.78.22.89.5.1.26.07.66.03.92l-.14.86c-.04.26-.2 1 .88.55 1.08-.46 5.83-3.43 7.95-5.88C21.53 14.24 22 12.68 22 11c0-4.42-4.48-8-10-8Zm-3.6 10.6H6.4a.53.53 0 0 1-.53-.53V9.07a.53.53 0 0 1 1.06 0v3.47H8.4a.53.53 0 0 1 0 1.06Zm2.07-.53a.53.53 0 0 1-1.06 0V9.07a.53.53 0 0 1 1.06 0v4Zm4.82 0a.53.53 0 0 1-.95.32l-2.04-2.78v2.46a.53.53 0 0 1-1.06 0V9.07a.53.53 0 0 1 .95-.32l2.04 2.78V9.07a.53.53 0 0 1 1.06 0v4Zm3.24-2.53a.53.53 0 0 1 0 1.06h-1.47v.94h1.47a.53.53 0 0 1 0 1.06h-2a.53.53 0 0 1-.53-.53V9.07c0-.29.24-.53.53-.53h2a.53.53 0 0 1 0 1.06h-1.47v.94h1.47Z"/></svg>
+      <span>LINE 諮詢</span>
+    </a>
+  </div>
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script src="js/common.js?v=b5dae5a3"></script>
+  <script src="js/inquiry.js?v=f8b3a6d1"></script>
+</body>
+</html>

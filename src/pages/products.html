@@ -1,0 +1,39 @@
+<!--meta
+{
+  "title": "產品展示｜光路國際有限公司",
+  "description": "光路國際禮贈品產品展示：保溫杯、包袋、文具、3C、廚房餐具、戶外用品等 {{product_count}} 款商品，皆可客製 Logo 與包裝，歡迎加入詢價籃線上詢價。",
+  "page": "products",
+  "scripts": ["js/products.js"]
+}
+-->
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="目前位置"><a href="index.html">首頁</a><span>產品展示</span></nav>
+        <h1>產品展示</h1>
+        <p><span class="ph">所有商品皆可客製 Logo 或專屬包裝。</span><span class="ph">看到喜歡的，加入詢價籃一次詢價。</span></p>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container catalog">
+        <aside class="catalog-side" aria-label="產品分類">
+          <form class="catalog-search" id="catalog-search" role="search">
+            <label class="visually-hidden" for="q">搜尋商品</label>
+            <input id="q" name="q" type="search" placeholder="搜尋商品名稱" autocomplete="off">
+            <button type="submit" aria-label="搜尋">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="m21 21-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"/></svg>
+            </button>
+          </form>
+          <button type="button" class="catalog-cats-toggle" id="cats-toggle" aria-expanded="false" aria-controls="catalog-cats">產品分類</button>
+          <nav class="catalog-cats" id="catalog-cats"></nav>
+        </aside>
+        <div class="catalog-main">
+          <div class="catalog-bar">
+            <h2 id="catalog-title">全部商品</h2>
+            <p id="catalog-count"></p>
+          </div>
+          <div class="product-grid" id="product-grid" aria-live="polite"></div>
+          <nav class="pager" id="pager" aria-label="分頁"></nav>
+        </div>
+      </div>
+    </section>
