@@ -340,10 +340,22 @@ def not_found_page(products):
       var parts = location.pathname.split('/').filter(Boolean);
       var base = location.hostname.endsWith('github.io') ? '/' + parts.shift() + '/' : '/';
       var target = base;
+      // 舊 Shopify 頁面（/pages/...）對應到新網站的頁面
+      var pages = {{
+        'case-studies': 'cases.html', 'quote': 'inquiry.html', 'about': 'index.html#about',
+        'own-brand': 'index.html#brand', 'corporate-swag': 'products.html',
+        'gift-food': 'products.html', 'featured-products': 'products.html'
+      }};
       if (parts[0] === 'products' && parts[1]) {{
         var handle = decodeURIComponent(parts[1]);
         if (ids.indexOf(handle) !== -1) target = base + 'product/' + encodeURIComponent(handle) + '.html';
         else target = base + 'products.html';
+      }} else if (parts[0] === 'pages' && pages[parts[1]]) {{
+        target = base + pages[parts[1]];
+      }} else if (parts[0] === 'collections' || parts[0] === 'search') {{
+        target = base + 'products.html';
+      }} else if (parts[0] === 'cart') {{
+        target = base + 'inquiry.html';
       }}
       location.replace(target);
     }})();
