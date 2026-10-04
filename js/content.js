@@ -29,7 +29,7 @@ window.SITE_CONTENT = {
     { title: '台灣意象領帶', client: '臺北市議會', category: '織品', img: 'case-tpcc-tie.webp' },
     { title: '警察熊制服玩偶', category: '公仔玩偶', img: 'police-bear-uniform.webp', featured: 4 },
     { title: '「輔弼警政」水晶紀念牌', category: '獎牌獎座', img: 'police-advisor-crystal-award.webp' },
-    { title: '扶輪 D3350 紀念馬克杯', category: '杯瓶', img: 'rotary-d3350-mug.webp', featured: 6 },
+    { title: '扶輪社紀念馬克杯', category: '杯瓶', img: 'rotary-d3350-mug.webp', featured: 6 },
     { title: '「功在大橋」水晶感謝牌', category: '獎牌獎座', img: 'dachiao-crystal-award.webp' },
     { title: '預防詐騙宣導卡套', category: '宣導品', img: 'anti-fraud-cardholder.webp' },
     { title: 'BNI 雙金質獎章', category: '獎牌獎座', img: 'bni-gold-plaque.webp', featured: 5 },
