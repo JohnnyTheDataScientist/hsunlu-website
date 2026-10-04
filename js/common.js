@@ -92,6 +92,21 @@
       '　<a href="' + root + 'inquiry.html">前往詢價（' + load().length + '）</a>');
   }
 
+  // 商品卡片上的「加入詢價籃」（產品列表、馴鹿品牌頁共用）
+  function markAdded(btn) {
+    btn.classList.add('is-added');
+    btn.textContent = '已在詢價籃';
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('.pcard-add');
+    if (!b) return;
+    addToBasket({ id: b.dataset.id, title: b.dataset.title });
+    markAdded(b);
+  });
+  [].forEach.call(document.querySelectorAll('.pcard-add'), function (b) {
+    if (Inquiry.has(b.dataset.id)) markAdded(b);
+  });
+
   // ---------- 圖片燈箱 ----------
   var lightbox = document.getElementById('lightbox');
   var Lightbox = { open: function () {} };

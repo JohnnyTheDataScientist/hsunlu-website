@@ -31,10 +31,13 @@
     if (scroll) document.querySelector('.catalog').scrollIntoView({ block: 'start' });
   }
 
+  var BRAND = '馴鹿品牌'; // 特別分類：馴鹿 HSUNLU 商品，同時也保留在各自原本的分類裡
+  function inCat(p, cat) { return cat === BRAND ? !!p.b : p.c === cat; }
+
   function filtered(st) {
     var words = st.q.toLowerCase().split(/\s+/).filter(Boolean);
     return data.products.filter(function (p) {
-      if (st.cat && p.c !== st.cat) return false;
+      if (st.cat && !inCat(p, st.cat)) return false;
       if (st.sub && p.s !== st.sub) return false;
       var t = p.t.toLowerCase();
       return words.every(function (w) { return t.indexOf(w) !== -1; });
@@ -51,6 +54,8 @@
         '><span>' + S.esc(label) + '</span><span class="n">' + n + '</span></a>';
     };
     var html = link('全部商品', '', '', data.products.length, !st.cat && !st.q, 'cat-link');
+    var brandCount = data.products.filter(function (p) { return p.b; }).length;
+    if (brandCount) html += link(BRAND, BRAND, '', brandCount, st.cat === BRAND, 'cat-link cat-link-brand');
     data.categories.forEach(function (c) {
       var n = count(c.name);
       if (!n) return;
@@ -72,7 +77,7 @@
       '<span class="pcard-img"><img src="' + S.Inquiry.thumb(p.id) + '" alt="" loading="lazy" width="480" height="480"></span>' +
       '<span class="pcard-cat">' + S.esc(p.s || p.c) + '</span>' +
       '<span class="pcard-title">' + S.esc(p.t) + '</span></a>' +
-      '<button type="button" class="pcard-add' + (inBasket ? ' is-added' : '') + '" data-id="' + S.esc(p.id) + '">' +
+      '<button type="button" class="pcard-add' + (inBasket ? ' is-added' : '') + '" data-id="' + S.esc(p.id) + '" data-title="' + S.esc(p.t) + '">' +
       (inBasket ? '已在詢價籃' : '＋ 加入詢價籃') + '</button></article>';
   }
 
@@ -132,14 +137,6 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     go({ cat: '', sub: '', q: input.value.trim(), page: 1 }, false);
-  });
-  grid.addEventListener('click', function (e) {
-    var b = e.target.closest('.pcard-add');
-    if (!b) return;
-    var p = data.products.find(function (x) { return x.id === b.dataset.id; });
-    S.addToBasket({ id: p.id, title: p.t });
-    b.classList.add('is-added');
-    b.textContent = '已在詢價籃';
   });
   catsToggle.addEventListener('click', function () {
     var open = catsToggle.getAttribute('aria-expanded') !== 'true';

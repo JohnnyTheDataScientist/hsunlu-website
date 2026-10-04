@@ -196,6 +196,10 @@ p, dd, li { text-wrap: pretty; }
 .brand-copy h2 { margin-bottom: 20px; }
 .brand-copy p:not(.eyebrow) { color: var(--muted); }
 .brand-copy p + p { margin-top: 1em; }
+.brand-cta { margin-top: 32px; }
+.brand-story { background: var(--paper); }
+.brand-products { background: var(--sand); padding-top: clamp(72px, 10vw, 112px); }
+.product-grid.product-grid-brand { grid-template-columns: repeat(3, 1fr); gap: 40px 24px; }
 
 /* 聯絡我們頁 */
 .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -247,7 +251,12 @@ p, dd, li { text-wrap: pretty; }
 
 /* 產品列表 */
 .catalog { display: grid; grid-template-columns: 240px 1fr; gap: clamp(28px, 4vw, 56px); align-items: start; }
-.catalog-side { position: sticky; top: calc(var(--header-h) + 24px); }
+.catalog-side {
+  /* 分類區自己捲動：最高一個畫面，內容超過時在側欄裡捲，不必等右邊商品列表捲到底 */
+  position: sticky; top: calc(var(--header-h) + 24px);
+  max-height: calc(100vh - var(--header-h) - 48px); overflow-y: auto; overscroll-behavior: contain;
+  scrollbar-width: thin; scrollbar-color: var(--rule) transparent; padding-right: 6px;
+}
 .catalog-search { display: flex; border: 1px solid var(--rule); background: #fff; margin-bottom: 24px; }
 .catalog-search input { flex: 1; min-width: 0; border: 0; padding: 12px 14px; font: inherit; background: transparent; }
 .catalog-search input:focus { outline: none; }
@@ -261,6 +270,7 @@ p, dd, li { text-wrap: pretty; }
 .cat-link.is-active, .sub-link.is-active { color: var(--green); font-weight: 700; }
 .cat-link .n, .sub-link .n { color: var(--muted); font-size: 0.82rem; font-weight: 400; }
 .sub-links { display: flex; flex-direction: column; background: var(--sand); }
+.cat-link-brand span:first-child::before { content: "★"; color: var(--green); margin-right: 6px; font-size: 0.8em; }
 .sub-link { padding: 9px 4px 9px 18px; font-size: 0.9rem; border-bottom-color: #e8e3d8; }
 .catalog-bar { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--rule); padding-bottom: 16px; margin-bottom: 28px; }
 .catalog-bar h2 { font-size: clamp(1.4rem, 2.4vw, 1.8rem); }
@@ -295,6 +305,9 @@ p, dd, li { text-wrap: pretty; }
 .pd-thumb { padding: 0; border: 1px solid #ebe8e1; background: #fff; cursor: pointer; aspect-ratio: 1; }
 .pd-thumb img { width: 100%; height: 100%; object-fit: contain; }
 .pd-thumb[aria-current] { border-color: var(--forest); box-shadow: inset 0 0 0 1px var(--forest); }
+.pd-brand { margin-bottom: 10px; }
+.pd-brand a { display: inline-block; font-size: 0.8rem; letter-spacing: 0.1em; text-decoration: none; color: #fff; background: var(--green); padding: 4px 12px; }
+.pd-brand a:hover { background: var(--forest); }
 .pd-cat { font-size: 0.85rem; letter-spacing: 0.14em; color: var(--green); }
 .pd-cat a { text-decoration: none; }
 .pd-info h1 { font-size: clamp(1.5rem, 2.6vw, 2.1rem); margin: 10px 0 18px; }
@@ -430,7 +443,7 @@ p, dd, li { text-wrap: pretty; }
   .footer-about, .footer-contact { grid-column: 1 / -1; }
   .case-grid-featured { grid-template-columns: repeat(2, 1fr); gap: 32px 14px; }
   .catalog { grid-template-columns: 1fr; }
-  .catalog-side { position: static; }
+  .catalog-side { position: static; max-height: none; overflow: visible; padding-right: 0; }
   .catalog-search { margin-bottom: 12px; }
   .catalog-cats-toggle {
     display: flex; justify-content: space-between; width: 100%; font: inherit; padding: 12px 14px;
@@ -440,7 +453,7 @@ p, dd, li { text-wrap: pretty; }
   .catalog-cats-toggle[aria-expanded="true"]::after { content: "－"; }
   .catalog-cats { display: none; border-top: 0; }
   .catalog-cats.open { display: flex; }
-  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 14px; }
+  .product-grid, .product-grid.product-grid-brand { grid-template-columns: repeat(2, 1fr); gap: 28px 14px; }
   .pd-grid, .inquiry { grid-template-columns: 1fr; }
   .pd-thumbs { grid-template-columns: repeat(5, 1fr); }
   .field-row { grid-template-columns: 1fr; }

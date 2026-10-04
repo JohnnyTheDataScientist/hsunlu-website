@@ -25,6 +25,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.dirname(HERE)
 ROOT = os.path.dirname(SITE)
 SRC_JSON = os.path.join(ROOT, "shopify-export", "data", "products.json")
+SRC_COLLECTIONS = os.path.join(ROOT, "shopify-export", "data", "collections.json")
+# 馴鹿 HSUNLU 自有品牌商品 = Shopify 上「馴鹿嚴選」系列裡有上架的商品
+BRAND_COLLECTION = "own-brand"
 SRC_IMG = os.path.join(ROOT, "shopify-export", "images", "products")
 OUT_JSON = os.path.join(SITE, "data", "products.json")
 OUT_IMG = os.path.join(SITE, "img", "products")
@@ -143,6 +146,8 @@ def convert(src, dest, px):
 
 def main():
     products = json.load(open(SRC_JSON, encoding="utf-8"))
+    collections = json.load(open(SRC_COLLECTIONS, encoding="utf-8"))
+    brand_ids = {x["handle"] for c in collections if c["handle"] == BRAND_COLLECTION for x in c["products"]["nodes"]}
     out = []
     for p in products:
         if p["status"] != "ACTIVE" or p["handle"] in EXCLUDE:
@@ -176,6 +181,7 @@ def main():
             "options": options,
             "summary": plain_text(desc),
             "description": desc,
+            "brand": handle in brand_ids,
         })
 
     order = {c: i for i, (c, _) in enumerate(CATEGORIES)}
@@ -189,7 +195,7 @@ def main():
     by_cat = {}
     for x in out:
         by_cat[x["category"]] = by_cat.get(x["category"], 0) + 1
-    print(f"{len(out)} 個商品 →", os.path.relpath(OUT_JSON, ROOT))
+    print(f"{len(out)} 個商品 →", os.path.relpath(OUT_JSON, ROOT), f"（馴鹿品牌 {sum(x['brand'] for x in out)} 個）")
     for c, n in by_cat.items():
         print(f"  {c}: {n}")
 

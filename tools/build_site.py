@@ -44,7 +44,7 @@ NAV = [
     ("關於我們", "index.html#about", "about"),
     ("產品展示", "products.html", "products"),
     ("合作案例", "cases.html", "cases"),
-    ("馴鹿品牌", "index.html#brand", "brand"),
+    ("馴鹿品牌", "brand.html", "brand"),
     ("聯絡我們", "contact.html", "contact"),
 ]
 
@@ -95,7 +95,7 @@ FOOTER_LINKS = [
     ("關於我們", "index.html#about"),
     ("產品展示", "products.html"),
     ("合作案例", "cases.html"),
-    ("馴鹿品牌", "index.html#brand"),
+    ("馴鹿品牌", "brand.html"),
     ("線上詢價", "inquiry.html"),
     ("聯絡我們", "contact.html"),
 ]
@@ -120,6 +120,7 @@ def footer(page, prefix, categories):
       </nav>
       <nav class="footer-col" aria-label="產品中心">
         <p class="footer-col-title">產品中心</p>
+        <a href="{prefix}products.html?cat=馴鹿品牌">馴鹿品牌</a>
 {cats}
       </nav>
       <div class="footer-col footer-contact">
@@ -250,6 +251,7 @@ def product_page(p, products, categories):
             <div class="pd-thumbs">{thumbs}</div>
           </div>
           <div class="pd-info">
+            {f'<p class="pd-brand"><a href="{prefix}brand.html">馴鹿 HSUNLU 自有品牌</a></p>' if p["brand"] else ""}
             <p class="pd-cat"><a href="{cat_link}">{esc(p["category"])}</a>{(" ・ " + esc(p["sub"])) if p["sub"] and p["sub"] != p["category"] else ""}</p>
             <h1>{esc(p["title"])}</h1>
             {f'<p class="pd-summary">{esc(p["summary"])}</p>' if p["summary"] else ""}
@@ -287,11 +289,13 @@ def product_page(p, products, categories):
     return layout(meta, main, prefix, categories, f'product/{p["id"]}.html', head)
 
 
-def product_card(p, prefix):
+def product_card(p, prefix, add=False):
+    button = (f'<button type="button" class="pcard-add" data-id="{esc(p["id"])}" data-title="{esc(p["title"])}">＋ 加入詢價籃</button>'
+              if add else "")
     return (f'<article class="pcard"><a class="pcard-link" href="{prefix}product/{p["id"]}.html">'
             f'<span class="pcard-img"><img src="{prefix}img/products/{p["id"]}/thumb.webp" alt="" loading="lazy" width="480" height="480"></span>'
-            f'<span class="pcard-cat">{esc(p["category"])}</span>'
-            f'<span class="pcard-title">{esc(p["title"])}</span></a></article>')
+            f'<span class="pcard-cat">{esc(p["sub"] or p["category"])}</span>'
+            f'<span class="pcard-title">{esc(p["title"])}</span></a>{button}</article>')
 
 
 def not_found_page(products):
@@ -314,7 +318,7 @@ def not_found_page(products):
       // 舊 Shopify 頁面（/pages/...）對應到新網站的頁面
       var pages = {{
         'case-studies': 'cases.html', 'quote': 'inquiry.html', 'about': 'index.html#about',
-        'own-brand': 'index.html#brand', 'corporate-swag': 'products.html',
+        'own-brand': 'brand.html', 'corporate-swag': 'products.html',
         'gift-food': 'products.html', 'featured-products': 'products.html'
       }};
       if (parts[0] === 'products' && parts[1]) {{
@@ -345,14 +349,17 @@ def main():
     count = str(len(products))
 
     # 產品列表頁用的精簡清單（不含描述）
-    index = [{"id": p["id"], "t": p["title"], "c": p["category"], "s": p["sub"]} for p in products]
+    index = [dict({"id": p["id"], "t": p["title"], "c": p["category"], "s": p["sub"]}, **({"b": 1} if p["brand"] else {}))
+             for p in products]
     with open(os.path.join(SITE, "data", "products-index.json"), "w", encoding="utf-8") as f:
         json.dump({"categories": categories, "products": index}, f, ensure_ascii=False, separators=(",", ":"))
 
     built = []
     for name in sorted(os.listdir(PAGES)):
         meta, body = read_page(name)
-        body = body.replace("{{product_count}}", count)
+        body = (body.replace("{{product_count}}", count)
+                    .replace("{{brand_count}}", str(sum(p["brand"] for p in products)))
+                    .replace("{{brand_products}}", "\n".join(product_card(p, "", add=True) for p in products if p["brand"])))
         meta["description"] = meta["description"].replace("{{product_count}}", count)
         path = "" if name == "index.html" else name
         with open(os.path.join(SITE, name), "w", encoding="utf-8") as f:
@@ -370,7 +377,7 @@ def main():
     with open(os.path.join(SITE, "404.html"), "w", encoding="utf-8") as f:
         f.write(not_found_page(products))
 
-    urls = [SITE_URL, SITE_URL + "products.html", SITE_URL + "cases.html", SITE_URL + "contact.html"] + \
+    urls = [SITE_URL, SITE_URL + "products.html", SITE_URL + "cases.html", SITE_URL + "contact.html", SITE_URL + "brand.html"] + \
            [SITE_URL + quote("product/" + p["id"] + ".html") for p in products]
     with open(os.path.join(SITE, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
