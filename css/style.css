@@ -199,8 +199,7 @@ p, dd, li { text-wrap: pretty; }
 .line-card { background: var(--paper); color: var(--ink); padding: 40px; text-align: center; }
 .line-card img { width: 200px; margin: 0 auto 24px; }
 .line-card h3 { font-family: var(--serif); font-weight: 500; font-size: 1.25rem; }
-.line-card p { color: var(--muted); font-size: 0.92rem; margin: 8px 0 20px; }
-.line-card .text-link { color: var(--forest); }
+.line-card p { color: var(--muted); font-size: 0.92rem; margin-top: 8px; }
 
 /* Footer */
 .site-footer { background: #1b2620; color: rgba(239, 233, 221, 0.7); padding: 56px 0 40px; font-size: 0.88rem; }
