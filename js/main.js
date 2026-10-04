@@ -23,11 +23,20 @@
   }).join('');
 
   if (content.cases.length > initial) {
-    moreBtn.textContent = '查看全部 ' + content.cases.length + ' 個案例';
+    var extra = [].slice.call(grid.querySelectorAll('.case')).slice(initial);
+    var expanded = false;
+    var setLabel = function () {
+      moreBtn.textContent = expanded ? '收合案例' : '查看全部 ' + content.cases.length + ' 個案例';
+      moreBtn.setAttribute('aria-expanded', expanded);
+    };
+    setLabel();
     moreBtn.hidden = false;
     moreBtn.addEventListener('click', function () {
-      grid.querySelectorAll('.case[hidden]').forEach(function (el) { el.hidden = false; });
-      moreBtn.hidden = true;
+      expanded = !expanded;
+      extra.forEach(function (el) { el.hidden = !expanded; });
+      setLabel();
+      // 收合後上方內容變短，把按鈕捲回畫面中，免得使用者被留在下一個區塊
+      if (!expanded) moreBtn.scrollIntoView({ block: 'center' });
     });
   }
 
