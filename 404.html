@@ -5,8 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>光路國際有限公司</title>
   <meta name="robots" content="noindex">
-  <meta http-equiv="refresh" content="0; url=/">
-  <link rel="canonical" href="https://hsunlu.com/">
+  <script>
+    // 舊 Shopify 網址（/products/... 等）一律導回首頁。
+    // 放在 github.io/專案名/ 底下時，首頁是第一層路徑，不是網域根目錄。
+    var home = location.hostname.endsWith('github.io')
+      ? '/' + location.pathname.split('/')[1] + '/'
+      : '/';
+    location.replace(home);
+  </script>
 </head>
 <body>
   <p>網站已改版，正在帶您回到首頁… <a href="/">光路國際 首頁</a></p>
