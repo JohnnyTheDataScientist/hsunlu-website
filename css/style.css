@@ -89,6 +89,7 @@ p, dd, li { text-wrap: pretty; }
 .brand-name { font-family: var(--serif); font-weight: 700; font-size: 1.45rem; letter-spacing: 0.22em; }
 .brand-sub { font-size: 0.78rem; letter-spacing: 0.2em; color: var(--muted); padding-left: 12px; border-left: 1px solid var(--rule); }
 .site-nav { display: flex; align-items: center; gap: 36px; }
+.site-nav a { white-space: nowrap; }
 .site-nav a:not(.btn) { text-decoration: none; font-size: 0.93rem; letter-spacing: 0.1em; color: var(--ink); position: relative; }
 .site-nav a:not(.btn)::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px;
@@ -200,6 +201,30 @@ p, dd, li { text-wrap: pretty; }
 .brand-story { background: var(--paper); }
 .brand-products { background: var(--sand); padding-top: clamp(72px, 10vw, 112px); }
 .product-grid.product-grid-brand { grid-template-columns: repeat(3, 1fr); gap: 40px 24px; }
+
+/* 服務流程頁 */
+.process-layout { display: grid; grid-template-columns: 1fr 340px; gap: clamp(40px, 6vw, 88px); align-items: start; }
+.timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+.timeline::before { content: ""; position: absolute; left: 27px; top: 8px; bottom: 8px; width: 1px; background: var(--rule); }
+.timeline-step { display: grid; grid-template-columns: 56px 1fr; gap: 28px; position: relative; }
+.timeline-step + .timeline-step { margin-top: 44px; }
+.timeline-step .step-no {
+  width: 56px; height: 56px; border-radius: 50%; background: var(--forest); color: var(--cream);
+  display: flex; align-items: center; justify-content: center; font-size: 1.15rem; margin: 0; position: relative;
+}
+.timeline-step h2 { font-size: clamp(1.25rem, 2vw, 1.5rem); margin: 10px 0 10px; }
+.timeline-step p { color: var(--muted); }
+.timeline-step ul { margin: 14px 0 0; padding: 16px 20px 16px 36px; background: var(--sand); color: var(--muted); font-size: 0.93rem; }
+.timeline-step li + li { margin-top: 4px; }
+.process-side { position: sticky; top: calc(var(--header-h) + 24px); }
+.prep-card { background: #fff; border: 1px solid #ebe8e1; padding: 32px 28px; }
+.prep-card h2 { font-size: 1.3rem; margin-bottom: 12px; }
+.prep-card p { color: var(--muted); font-size: 0.93rem; }
+.prep-card ul { margin: 14px 0; padding-left: 20px; font-size: 0.95rem; }
+.prep-card li + li { margin-top: 6px; }
+.prep-note { margin-bottom: 24px; }
+.prep-card .btn { width: 100%; }
+.prep-card .btn + .btn { margin-top: 10px; }
 
 /* 聯絡我們頁 */
 .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -405,15 +430,8 @@ p, dd, li { text-wrap: pretty; }
   .product-grid { grid-template-columns: repeat(3, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
-@media (max-width: 1024px) {
-  .service-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 24px; }
-  .case-grid { grid-template-columns: repeat(3, 1fr); gap: 40px 20px; }
-  .steps { grid-template-columns: repeat(2, 1fr); }
-  .steps li:nth-child(3) { border-left: 0; padding-left: 0; }
-  .steps li { padding-bottom: 32px; }
-}
-@media (max-width: 800px) {
-  .container { width: calc(100% - 32px); }
+/* 選單項目多，1080px 以下改用漢堡選單，避免文字擠到折行或貼到左邊的公司名稱 */
+@media (max-width: 1080px) {
   .nav-toggle { display: block; }
   .site-nav {
     position: absolute; top: var(--header-h); left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0;
@@ -426,6 +444,16 @@ p, dd, li { text-wrap: pretty; }
   .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
   .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
   .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+}
+@media (max-width: 1024px) {
+  .service-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 24px; }
+  .case-grid { grid-template-columns: repeat(3, 1fr); gap: 40px 20px; }
+  .steps { grid-template-columns: repeat(2, 1fr); }
+  .steps li:nth-child(3) { border-left: 0; padding-left: 0; }
+  .steps li { padding-bottom: 32px; }
+}
+@media (max-width: 800px) {
+  .container { width: calc(100% - 32px); }
   .brand-name { font-size: 1.25rem; }
   .brand-grid { grid-template-columns: 1fr; }
 
@@ -433,7 +461,12 @@ p, dd, li { text-wrap: pretty; }
   .kicker { font-size: 0.9rem; letter-spacing: 0.04em; }
   .section-head-split { grid-template-columns: 1fr; gap: 16px; }
   .section-head-split > p { justify-self: start; }
-  .about-grid, .contact-main { grid-template-columns: 1fr; }
+  .about-grid, .contact-main, .process-layout { grid-template-columns: 1fr; }
+  .process-side { position: static; }
+  .timeline-step { grid-template-columns: 44px 1fr; gap: 18px; }
+  .timeline-step .step-no { width: 44px; height: 44px; font-size: 1rem; }
+  .timeline::before { left: 21px; }
+  .timeline-step h2 { margin-top: 6px; }
   .contact-cards { grid-template-columns: 1fr; gap: 12px; }
   .about-body { padding-top: 0; }
   .case-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 14px; }

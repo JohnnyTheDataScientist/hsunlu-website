@@ -41,7 +41,9 @@ COMPANY = {
 }
 
 NAV = [
+    ("首頁", "index.html#top", "home"),
     ("關於我們", "index.html#about", "about"),
+    ("服務流程", "process.html", "process"),
     ("產品展示", "products.html", "products"),
     ("合作案例", "cases.html", "cases"),
     ("馴鹿品牌", "brand.html", "brand"),
@@ -93,6 +95,7 @@ def header(page, prefix):
 FOOTER_LINKS = [
     ("首頁", "index.html#top"),
     ("關於我們", "index.html#about"),
+    ("服務流程", "process.html"),
     ("產品展示", "products.html"),
     ("合作案例", "cases.html"),
     ("馴鹿品牌", "brand.html"),
@@ -377,7 +380,7 @@ def main():
     with open(os.path.join(SITE, "404.html"), "w", encoding="utf-8") as f:
         f.write(not_found_page(products))
 
-    urls = [SITE_URL, SITE_URL + "products.html", SITE_URL + "cases.html", SITE_URL + "contact.html", SITE_URL + "brand.html"] + \
+    urls = [SITE_URL, SITE_URL + "products.html", SITE_URL + "cases.html", SITE_URL + "contact.html", SITE_URL + "brand.html", SITE_URL + "process.html"] + \
            [SITE_URL + quote("product/" + p["id"] + ".html") for p in products]
     with open(os.path.join(SITE, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
