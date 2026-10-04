@@ -3,19 +3,20 @@
 
 window.SITE_CONTENT = {
   // 合作單位跑馬燈（img/partners/）
+  // 企業與政府單位交錯排列，避免政府機關連續出現
   partners: [
+    { name: '屈臣氏', logo: 'watsons.png' },
     { name: '台北市政府', logo: 'taipei-city-government.png' },
-    { name: '新北市政府', logo: 'new-taipei-city-government.png' },
-    { name: '台北市議會', logo: 'taipei-city-council.png' },
+    { name: '國際扶輪 Rotary', logo: 'rotary.png' },
     { name: '新北市議會', logo: 'new-taipei-city-council.png' },
     { name: '台北市警察局', logo: 'taipei-police.png' },
-    { name: '新北市警察局', logo: 'new-taipei-police.png' },
-    { name: '新北市警察之友會', logo: 'ntpc-police-friends-assoc.png' },
-    { name: '屈臣氏', logo: 'watsons.png' },
-    { name: 'CoCo都可', logo: 'coco-tea.png' },
     { name: '全家便利商店', logo: 'familymart.png' },
-    { name: '國際扶輪 Rotary', logo: 'rotary.png' },
+    { name: '新北市政府', logo: 'new-taipei-city-government.png' },
+    { name: 'CoCo都可', logo: 'coco-tea.png' },
+    { name: '台北市議會', logo: 'taipei-city-council.png' },
+    { name: '新北市警察之友會', logo: 'ntpc-police-friends-assoc.png' },
     { name: '國際獅子會', logo: 'lions-club.png' },
+    { name: '新北市警察局', logo: 'new-taipei-police.png' },
   ],
 
   // 合作案例（img/cases/），全部用同一種卡片呈現
