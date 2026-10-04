@@ -1,51 +1,47 @@
 (function () {
   var content = window.SITE_CONTENT;
 
-  // 合作夥伴跑馬燈：內容複製一份接在後面，CSS 位移 -50% 就能無縫循環
+  // 合作單位跑馬燈：同一組內容排兩次，CSS 位移 -50% 就能無縫循環
   var track = document.getElementById('marquee-track');
   var items = content.partners.map(function (p) {
-    return '<div class="partner"><img src="img/partners/' + p.logo + '" alt="" loading="lazy"><span>' + p.name + '</span></div>';
+    return '<div class="client"><img src="img/partners/' + p.logo + '" alt="" loading="lazy"><span>' + p.name + '</span></div>';
   }).join('');
-  track.innerHTML = items + '<div class="marquee-dup" aria-hidden="true">' + items + '</div>';
-  track.style.setProperty('--duration', content.partners.length * 3 + 's');
+  track.innerHTML = '<div class="marquee-set">' + items + '</div><div class="marquee-set" aria-hidden="true">' + items + '</div>';
+  track.style.setProperty('--duration', content.partners.length * 4 + 's');
 
-  // 合作案例：類別篩選 + 圖片網格
+  // 合作案例：統一卡片，先顯示 casesInitial 個
   var grid = document.getElementById('case-grid');
-  var filters = document.getElementById('case-filters');
-  var categories = ['全部'].concat(content.cases.map(function (c) { return c.category; })
-    .filter(function (c, i, all) { return all.indexOf(c) === i; }));
-
-  filters.innerHTML = categories.map(function (c, i) {
-    return '<button type="button" data-cat="' + c + '" aria-pressed="' + (i === 0) + '">' + c + '</button>';
-  }).join('');
+  var moreBtn = document.getElementById('cases-more');
+  var initial = content.casesInitial || content.cases.length;
 
   grid.innerHTML = content.cases.map(function (c, i) {
-    return '<button type="button" class="case-item" data-cat="' + c.category + '" data-index="' + i + '">' +
-      '<img src="img/cases/' + c.img + '" alt="' + c.title + '" loading="lazy" width="900" height="900">' +
-      '<span class="case-title">' + c.title + '</span><span class="case-cat">' + c.category + '</span></button>';
+    var meta = c.client ? c.client + ' ・ ' + c.category : c.category;
+    return '<button type="button" class="case" data-index="' + i + '"' + (i >= initial ? ' hidden' : '') + '>' +
+      '<span class="case-frame"><img src="img/cases/' + c.img + '" alt="' + c.title + '" loading="lazy" width="900" height="900"></span>' +
+      '<span class="case-meta">' + meta + '</span>' +
+      '<span class="case-title">' + c.title + '</span></button>';
   }).join('');
 
-  filters.addEventListener('click', function (e) {
-    var btn = e.target.closest('button');
-    if (!btn) return;
-    var cat = btn.dataset.cat;
-    filters.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', b === btn); });
-    grid.querySelectorAll('.case-item').forEach(function (item) {
-      item.hidden = cat !== '全部' && item.dataset.cat !== cat;
+  if (content.cases.length > initial) {
+    moreBtn.textContent = '查看全部 ' + content.cases.length + ' 個案例';
+    moreBtn.hidden = false;
+    moreBtn.addEventListener('click', function () {
+      grid.querySelectorAll('.case[hidden]').forEach(function (el) { el.hidden = false; });
+      moreBtn.hidden = true;
     });
-  });
+  }
 
   // 燈箱
   var lightbox = document.getElementById('lightbox');
   var lbImg = lightbox.querySelector('img');
   var lbCap = lightbox.querySelector('figcaption');
   grid.addEventListener('click', function (e) {
-    var item = e.target.closest('.case-item');
+    var item = e.target.closest('.case');
     if (!item) return;
     var c = content.cases[item.dataset.index];
     lbImg.src = 'img/cases/' + c.img;
     lbImg.alt = c.title;
-    lbCap.textContent = c.title;
+    lbCap.textContent = (c.client ? c.client + '｜' : '') + c.title;
     lightbox.hidden = false;
     document.body.style.overflow = 'hidden';
   });
