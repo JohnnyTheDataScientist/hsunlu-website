@@ -28,9 +28,14 @@ h2 { font-size: clamp(1.65rem, 3vw, 2.4rem); }
 h3 { font-size: 1.22rem; letter-spacing: 0.04em; }
 p { margin: 0; }
 
-/* 中文斷行：.ph 是一個不可拆的語句片段，只在片段之間換行；
-   標題與短句平均分配每行字數，長段落避免末行只剩一兩個字 */
+/* 中文斷行：.ph 是一個不可拆的語句片段（用在標題、卡片短句、地址），只在片段之間換行；
+   標題與短句平均分配每行字數 */
 .ph { display: inline-block; }
+/* 長段落正常斷行，只把最後一個短句綁在一起，避免末行孤字 */
+.nw { white-space: nowrap; }
+/* main.js 斷詞完成後才啟用：只在 <wbr>（詞與詞之間）和標點處換行；
+   萬一有一個詞比整行還寬，才退回任意位置換行，避免撐破版面 */
+.word-wrap-zh :is(p, h1, h2, h3, dd, .case-title) { word-break: keep-all; overflow-wrap: anywhere; }
 h1, h2, h3, .case-title, .service p, .steps p, .clients-note { text-wrap: balance; }
 p, dd, li { text-wrap: pretty; }
 
@@ -146,7 +151,8 @@ p, dd, li { text-wrap: pretty; }
 /* Cases：全部同一種卡片 */
 .case-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 48px 28px; }
 .case {
-  display: block; width: 100%;
+  /* button 預設會把內容垂直置中；標題行數不同時圖片會上下錯位，所以固定靠上 */
+  display: block; width: 100%; align-self: start;
   font: inherit; color: inherit; text-align: left; padding: 0; border: 0; background: none; cursor: zoom-in;
 }
 .case[hidden] { display: none; }
