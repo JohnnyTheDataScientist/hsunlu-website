@@ -186,13 +186,31 @@ p { margin: 0 0 1em; }
 .copyright { margin: 0; opacity: 0.6; }
 
 /* Floating LINE */
+.line-float-wrap { position: fixed; right: 18px; bottom: 18px; z-index: 60; }
 .line-float {
-  position: fixed; right: 18px; bottom: 18px; z-index: 60;
   display: flex; align-items: center; gap: 8px; padding: 10px 18px 10px 12px;
   background: var(--line); color: #fff; border-radius: 999px; text-decoration: none; font-weight: 700;
   box-shadow: 0 6px 20px rgba(6, 199, 85, 0.35);
 }
 .line-float svg { width: 28px; height: 28px; }
+.line-pop { display: none; }
+
+/* 只在有滑鼠的裝置顯示 QR：手機掃不到自己的螢幕，直接點按鈕開 LINE */
+@media (hover: hover) and (pointer: fine) {
+  .line-pop {
+    display: block; position: absolute; right: 0; bottom: calc(100% + 12px); width: 200px;
+    background: #fff; border-radius: var(--radius); padding: 14px 14px 10px; text-align: center;
+    box-shadow: 0 10px 32px rgba(31, 42, 36, 0.18);
+    opacity: 0; visibility: hidden; transform: translateY(8px);
+    transition: opacity .2s, transform .2s, visibility .2s;
+  }
+  /* 透明橋接，滑鼠從按鈕移到卡片時不會中斷 */
+  .line-pop::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 12px; }
+  .line-pop p { margin: 0 0 6px; font-size: 0.85rem; color: var(--muted); }
+  .line-pop img { width: 100%; }
+  .line-float-wrap:hover .line-pop,
+  .line-float-wrap:focus-within .line-pop { opacity: 1; visibility: visible; transform: none; }
+}
 
 /* Responsive */
 @media (max-width: 960px) {
