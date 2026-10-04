@@ -117,7 +117,7 @@
   var seg = window.Intl && Intl.Segmenter ? new Intl.Segmenter('zh-Hant', { granularity: 'word' }) : null;
   var noLineStart = /^[，。、；：！？」』）〉》・…）]/;
   var noLineEnd = /[「『（〈《]$/;
-  var SELECTOR = 'p, h1, h2, h3, h4, dd, li, .case-title, .pcard-title, .cat-name';
+  var SELECTOR = 'p, h1, h2, h3, h4, dd, li, .case-title, .pcard-title';
   function wrapNode(node) {
     if (!/[一-鿿]/.test(node.data) || node.parentNode.closest('.nw')) return;
     var parts = Array.from(seg.segment(node.data), function (s) { return s.segment; });
@@ -148,8 +148,62 @@
   zhWrap(document.querySelector('main'));
   zhWrap(document.querySelector('footer'));
 
+  // ---------- 表單送出（詢價、聯絡共用） ----------
+  // 透過 FormSubmit（免費表單轉寄服務）寄到公司信箱；第一次使用需要到信箱點「Activate Form」啟用。
+  var EMAIL = 'costin1025@gmail.com';
+  var ENDPOINT = 'https://formsubmit.co/ajax/' + EMAIL;
+  function sendForm(form, opts) {
+    var btn = form.querySelector('button[type="submit"]');
+    var statusEl = form.querySelector('.form-status');
+    var label = btn.textContent;
+    var status = function (html, kind) {
+      statusEl.innerHTML = html;
+      statusEl.className = 'form-status ' + kind;
+      statusEl.hidden = false;
+    };
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      if (form.elements._honey && form.elements._honey.value) return; // 機器人填了隱藏欄位
+
+      var data = {};
+      [].forEach.call(form.elements, function (el) {
+        if (el.name && el.name !== '_honey') data[el.name] = el.value.trim();
+      });
+      if (opts.extend) opts.extend(data);
+      data._subject = opts.subject(data);
+      data._template = 'table';
+
+      btn.disabled = true;
+      btn.textContent = '送出中…';
+      statusEl.hidden = true;
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(function (r) { return r.json().catch(function () { return {}; }); })
+        .then(function (res) {
+          if (res.success !== true && res.success !== 'true') throw new Error(res.message || 'send failed');
+          form.reset();
+          if (opts.onSuccess) opts.onSuccess();
+          status('<strong>已收到您的訊息，謝謝！</strong><br>我們會盡快以 Email 或電話與您聯繫。', 'is-ok');
+        })
+        .catch(function () {
+          var body = Object.keys(data).filter(function (k) { return k.charAt(0) !== '_'; })
+            .map(function (k) { return k + '：' + data[k]; }).join('\n');
+          var mailto = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(data._subject) + '&body=' + encodeURIComponent(body);
+          status('送出失敗，可能是網路問題。您可以 <a href="' + mailto + '">改用 Email 寄出</a>，或直接來電 0966-578-635。', 'is-error');
+        })
+        .then(function () {
+          btn.disabled = false;
+          btn.textContent = label;
+        });
+    });
+  }
+
   window.Site = {
     root: root, esc: esc, phrases: phrases, plain: plain, toast: toast, zhWrap: zhWrap,
-    Inquiry: Inquiry, addToBasket: addToBasket, Lightbox: Lightbox
+    Inquiry: Inquiry, addToBasket: addToBasket, Lightbox: Lightbox, sendForm: sendForm
   };
 })();

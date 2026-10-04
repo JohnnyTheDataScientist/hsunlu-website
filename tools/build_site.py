@@ -45,7 +45,7 @@ NAV = [
     ("產品展示", "products.html", "products"),
     ("合作案例", "cases.html", "cases"),
     ("馴鹿品牌", "index.html#brand", "brand"),
-    ("聯絡我們", "index.html#contact", "contact"),
+    ("聯絡我們", "contact.html", "contact"),
 ]
 
 esc = html.escape
@@ -90,64 +90,51 @@ def header(page, prefix):
   </header>"""
 
 
+FOOTER_LINKS = [
+    ("首頁", "index.html#top"),
+    ("關於我們", "index.html#about"),
+    ("產品展示", "products.html"),
+    ("合作案例", "cases.html"),
+    ("馴鹿品牌", "index.html#brand"),
+    ("線上詢價", "inquiry.html"),
+    ("聯絡我們", "contact.html"),
+]
+
+
 def footer(page, prefix, categories):
-    quick = "\n".join(f'          <a href="{href(t, page, prefix)}">{label}</a>' for label, t, _ in NAV)
+    quick = "\n".join(f'        <a href="{href(t, page, prefix)}">{label}</a>' for label, t in FOOTER_LINKS)
     cats = "\n".join(
-        f'          <a href="{prefix}products.html?cat={esc(c["name"])}">{esc(c["name"])}</a>' for c in categories
+        f'        <a href="{prefix}products.html?cat={esc(c["name"])}">{esc(c["name"])}</a>' for c in categories
     )
     c = COMPANY
     return f"""  <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-about">
         <p class="footer-name">{c["name"]}</p>
-        <p><span class="ph">企業禮贈 ・ 政府機關 ・</span> <span class="ph">團體採購 ・ 專案客製</span></p>
-        <p>旗下品牌：馴鹿 HSUNLU</p>
+        <p>從保溫杯、包袋、文具、3C 到廚房與戶外用品，光路國際深耕禮贈品產業超過 20 年，長期為企業、政府機關與各類團體規劃客製禮贈，<span class="nw">從選品到交付一次完成。</span></p>
+        <p class="footer-brand">旗下品牌：馴鹿 HSUNLU</p>
       </div>
       <nav class="footer-col" aria-label="快速連結">
         <p class="footer-col-title">快速連結</p>
 {quick}
-          <a href="{prefix}inquiry.html">線上詢價</a>
       </nav>
-      <nav class="footer-col footer-cats" aria-label="產品分類">
-        <p class="footer-col-title">產品分類</p>
+      <nav class="footer-col" aria-label="產品中心">
+        <p class="footer-col-title">產品中心</p>
 {cats}
       </nav>
-      <div class="footer-col">
-        <p class="footer-col-title">聯絡資訊</p>
-        <a href="mailto:{c["email"]}">{c["email"]}</a>
-        <a href="tel:{c["phone_intl"]}">{c["phone"]}</a>
-        <span><span class="ph">台北市內湖區</span><span class="ph">東湖路113巷70弄8之1號</span></span>
+      <div class="footer-col footer-contact">
+        <p class="footer-col-title">聯絡我們</p>
+        <p>電話：<a href="tel:{c["phone_intl"]}">{c["phone"]}</a></p>
+        <p>Email：<a href="mailto:{c["email"]}">{c["email"]}</a></p>
+        <p>地址：<span class="ph">台北市內湖區</span><span class="ph">東湖路113巷70弄8之1號</span></p>
+        <a class="footer-qr" href="{c["line_footer"]}" target="_blank" rel="noopener" aria-label="加入 LINE 官方帳號">
+          <img src="{prefix}img/line-qr.png" alt="LINE 官方帳號 QR Code" width="540" height="540" loading="lazy">
+          <span>LINE 官方帳號</span>
+        </a>
       </div>
       <p class="copyright">© <span id="year">2026</span> {c["name"]}</p>
     </div>
   </footer>"""
-
-
-def contact_section(prefix):
-    c = COMPANY
-    maps = "https://www.google.com/maps/search/?api=1&query=" + c["address"]
-    return f"""    <section id="contact" class="contact">
-      <div class="container contact-grid">
-        <div class="contact-copy">
-          <p class="eyebrow eyebrow-light">聯絡我們</p>
-          <h2>有禮贈需求？<br>歡迎直接與我們聯繫</h2>
-          <p class="contact-lead">企業、機關採購與團體訂製，我們會盡快回覆<span class="nw">並提供建議方案。</span></p>
-          <dl class="contact-list">
-            <div><dt>Email</dt><dd><a href="mailto:{c["email"]}?subject=禮贈品詢價">{c["email"]}</a></dd></div>
-            <div><dt>電話</dt><dd><a href="tel:{c["phone_intl"]}">{c["phone"]}</a></dd></div>
-            <div><dt>地址</dt><dd><a href="{maps}" target="_blank" rel="noopener"><span class="ph">台北市內湖區</span><span class="ph">東湖路113巷70弄8之1號</span></a></dd></div>
-          </dl>
-          <a class="btn btn-light" href="{prefix}inquiry.html">線上詢價</a>
-        </div>
-        <div class="line-card">
-          <img src="{prefix}img/line-qr.png" alt="LINE 官方帳號 QR Code" width="540" height="540" loading="lazy">
-          <div>
-            <h3>LINE 官方帳號</h3>
-            <p><span class="ph">掃描 QR Code 加入好友，</span><span class="ph">直接線上諮詢。</span></p>
-          </div>
-        </div>
-      </div>
-    </section>"""
 
 
 LINE_SVG = ('<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 3.96 3.6 7.28 8.46 7.9.33.07.78.22.89.5.1.26.07.66.03.92l-.14.86c-.04.26-.2 1 .88.55 1.08-.46 5.83-3.43 7.95-5.88C21.53 14.24 22 12.68 22 11c0-4.42-4.48-8-10-8Zm-3.6 10.6H6.4a.53.53 0 0 1-.53-.53V9.07a.53.53 0 0 1 1.06 0v3.47H8.4a.53.53 0 0 1 0 1.06Zm2.07-.53a.53.53 0 0 1-1.06 0V9.07a.53.53 0 0 1 1.06 0v4Zm4.82 0a.53.53 0 0 1-.95.32l-2.04-2.78v2.46a.53.53 0 0 1-1.06 0V9.07a.53.53 0 0 1 .95-.32l2.04 2.78V9.07a.53.53 0 0 1 1.06 0v4Zm3.24-2.53a.53.53 0 0 1 0 1.06h-1.47v.94h1.47a.53.53 0 0 1 0 1.06h-2a.53.53 0 0 1-.53-.53V9.07c0-.29.24-.53.53-.53h2a.53.53 0 0 1 0 1.06h-1.47v.94h1.47Z"/></svg>')
@@ -234,22 +221,6 @@ def read_page(name):
     text = open(os.path.join(PAGES, name), encoding="utf-8").read()
     m = re.match(r"\s*<!--meta\s*(\{.*?\})\s*-->\s*", text, re.S)
     return json.loads(m.group(1)), text[m.end():]
-
-
-def category_tiles(categories, products):
-    tiles = []
-    for c in categories:
-        items = [p for p in products if p["category"] == c["name"]]
-        if not items:
-            continue
-        # 代表圖：該分類中圖片最多的商品（通常是拍得最完整的）
-        rep = max(items, key=lambda p: (len(p["images"]), -items.index(p)))
-        tiles.append(f"""          <a class="cat-tile" href="products.html?cat={esc(c["name"])}">
-            <span class="cat-img"><img src="img/products/{rep["id"]}/thumb.webp" alt="" loading="lazy" width="480" height="480"></span>
-            <span class="cat-name">{esc(c["name"])}</span>
-            <span class="cat-count">{len(items)} 款</span>
-          </a>""")
-    return "\n".join(tiles)
 
 
 def product_page(p, products, categories):
@@ -381,9 +352,7 @@ def main():
     built = []
     for name in sorted(os.listdir(PAGES)):
         meta, body = read_page(name)
-        body = (body.replace("{{product_count}}", count)
-                    .replace("{{category_tiles}}", category_tiles(categories, products))
-                    .replace("{{contact_section}}", contact_section("")))
+        body = body.replace("{{product_count}}", count)
         meta["description"] = meta["description"].replace("{{product_count}}", count)
         path = "" if name == "index.html" else name
         with open(os.path.join(SITE, name), "w", encoding="utf-8") as f:
@@ -401,7 +370,7 @@ def main():
     with open(os.path.join(SITE, "404.html"), "w", encoding="utf-8") as f:
         f.write(not_found_page(products))
 
-    urls = [SITE_URL, SITE_URL + "products.html", SITE_URL + "cases.html"] + \
+    urls = [SITE_URL, SITE_URL + "products.html", SITE_URL + "cases.html", SITE_URL + "contact.html"] + \
            [SITE_URL + quote("product/" + p["id"] + ".html") for p in products]
     with open(os.path.join(SITE, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')

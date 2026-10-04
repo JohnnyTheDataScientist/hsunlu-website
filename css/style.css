@@ -35,7 +35,7 @@ p { margin: 0; }
 .nw { white-space: nowrap; }
 /* common.js 斷詞完成後才啟用：只在 <wbr>（詞與詞之間）和標點處換行；
    萬一有一個詞比整行還寬，才退回任意位置換行，避免撐破版面 */
-.word-wrap-zh :is(p, h1, h2, h3, h4, dd, li, .case-title, .pcard-title, .cat-name) { word-break: keep-all; overflow-wrap: anywhere; }
+.word-wrap-zh :is(p, h1, h2, h3, h4, dd, li, .case-title, .pcard-title) { word-break: keep-all; overflow-wrap: anywhere; }
 h1, h2, h3, .case-title, .pcard-title, .service p, .steps p, .clients-note { text-wrap: balance; }
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 p, dd, li { text-wrap: pretty; }
@@ -111,7 +111,7 @@ p, dd, li { text-wrap: pretty; }
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 32px; margin-top: 48px; }
 
 /* Clients marquee */
-.clients { padding: clamp(64px, 8vw, 96px) 0; background: var(--sand); }
+.clients { padding: clamp(64px, 8vw, 96px) 0; background: var(--paper); }
 .clients-title, .clients-note { text-align: center; color: var(--muted); }
 .clients-title { font-size: 1.25rem; font-weight: 700; letter-spacing: 0.2em; color: var(--green); margin-bottom: 36px; }
 .clients-note { font-size: 0.85rem; margin-top: 28px; padding: 0 24px; }
@@ -180,6 +180,7 @@ p, dd, li { text-wrap: pretty; }
 }
 
 /* Process */
+.cases { background: var(--sand); }
 .steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--rule); }
 .steps li { padding: 32px 28px 0 0; }
 .steps li + li { padding-left: 28px; border-left: 1px solid var(--rule); }
@@ -187,7 +188,7 @@ p, dd, li { text-wrap: pretty; }
 .steps p { color: var(--muted); font-size: 0.93rem; margin-top: 10px; }
 
 /* 自有品牌：馴鹿 HSUNLU */
-.brand-section { background: var(--paper); }
+.brand-section { background: var(--sand); }
 .brand-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 7vw, 112px); align-items: center; }
 .brand-media { aspect-ratio: 1; background: #fff; border: 1px solid #ebe8e1; }
 .brand-media img { width: 100%; height: 100%; object-fit: contain; padding: 10%; }
@@ -196,32 +197,42 @@ p, dd, li { text-wrap: pretty; }
 .brand-copy p:not(.eyebrow) { color: var(--muted); }
 .brand-copy p + p { margin-top: 1em; }
 
-/* Contact */
-.contact { background: var(--forest); color: var(--cream); padding: clamp(72px, 10vw, 128px) 0; }
-.contact-grid { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(40px, 7vw, 120px); align-items: center; }
-.contact h2 { color: #fff; font-size: clamp(1.8rem, 3.2vw, 2.6rem); line-height: 1.5; }
-.contact-lead { color: rgba(239, 233, 221, 0.78); margin-top: 20px; }
-.contact-list { margin: 40px 0 44px; border-top: 1px solid rgba(239, 233, 221, 0.2); }
-.contact-list > div { display: grid; grid-template-columns: 88px 1fr; padding: 16px 0; border-bottom: 1px solid rgba(239, 233, 221, 0.2); }
-.contact-list dt { color: #b9c9bd; font-size: 0.85rem; letter-spacing: 0.14em; padding-top: 2px; }
-.contact-list dd { margin: 0; }
-.contact-list a { text-decoration: none; word-break: break-word; }
-.contact-list a:hover { text-decoration: underline; text-underline-offset: 4px; }
-.line-card { background: var(--paper); color: var(--ink); padding: 40px; text-align: center; }
-.line-card img { width: 200px; margin: 0 auto 24px; }
+/* 聯絡我們頁 */
+.contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.contact-card {
+  display: grid; grid-template-columns: 56px 1fr; grid-template-rows: auto auto; column-gap: 16px; align-items: center;
+  padding: 24px; background: #fff; border: 1px solid #ebe8e1; text-decoration: none; transition: border-color .2s;
+}
+.contact-card:hover { border-color: var(--green); }
+.contact-icon { grid-row: span 2; width: 56px; height: 56px; border-radius: 50%; background: var(--forest); color: var(--cream); display: flex; align-items: center; justify-content: center; }
+.contact-icon svg { width: 26px; height: 26px; }
+.contact-label { font-size: 0.85rem; color: var(--green); letter-spacing: 0.14em; font-weight: 700; }
+.contact-value { font-size: 1.05rem; word-break: break-word; }
+.contact-main { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(28px, 4vw, 48px); margin-top: clamp(40px, 6vw, 64px); align-items: start; }
+.form-intro { color: var(--muted); font-size: 0.92rem; margin: -12px 0 24px; }
+.contact-side { display: grid; gap: 20px; }
+.line-card { background: #fff; border: 1px solid #ebe8e1; color: var(--ink); padding: 32px; text-align: center; }
+.line-card img { width: 180px; margin: 0 auto 20px; }
 .line-card h3 { font-family: var(--serif); font-weight: 500; font-size: 1.25rem; }
 .line-card p { color: var(--muted); font-size: 0.92rem; margin-top: 8px; }
+.contact-map { aspect-ratio: 4 / 3; border: 1px solid #ebe8e1; background: var(--sand); }
+.contact-map iframe { width: 100%; height: 100%; border: 0; display: block; }
 
 /* Footer */
 .site-footer { background: #1b2620; color: rgba(239, 233, 221, 0.7); padding: 56px 0 40px; font-size: 0.88rem; }
-.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1.3fr 1.4fr; gap: 40px 48px; align-items: start; }
-.footer-name { font-family: var(--serif); font-size: 1.2rem; letter-spacing: 0.16em; color: var(--cream); margin-bottom: 10px; }
-.footer-col { display: flex; flex-direction: column; gap: 8px; }
-.footer-cats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; align-content: start; }
-.footer-cats .footer-col-title { grid-column: 1 / -1; }
-.footer-col-title { color: var(--cream); font-weight: 700; letter-spacing: 0.14em; margin-bottom: 6px; }
+.site-footer { padding-top: 64px; }
+.footer-grid { display: grid; grid-template-columns: 1.6fr 0.8fr 0.8fr 1.5fr; gap: 40px 48px; align-items: start; }
+.footer-name { font-family: var(--serif); font-size: 1.25rem; letter-spacing: 0.16em; color: var(--cream); margin-bottom: 14px; }
+.footer-about p:not(.footer-name) { line-height: 2; max-width: 360px; }
+.footer-brand { margin-top: 12px; color: var(--cream); }
+.footer-col { display: flex; flex-direction: column; gap: 10px; }
+.footer-col-title { color: var(--cream); font-size: 1rem; font-weight: 700; letter-spacing: 0.14em; margin-bottom: 8px; }
 .footer-col a { text-decoration: none; letter-spacing: 0.06em; }
 .footer-col a:hover { color: #fff; }
+.footer-contact a { text-decoration: none; }
+.footer-qr { display: inline-flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 10px; align-self: flex-start; }
+.footer-qr img { width: 132px; background: #fff; padding: 8px; }
+.footer-qr span { font-size: 0.8rem; color: var(--cream); letter-spacing: 0.08em; }
 .copyright { grid-column: 1 / -1; border-top: 1px solid rgba(239, 233, 221, 0.14); padding-top: 24px; font-size: 0.8rem; opacity: 0.7; }
 
 /* 子頁面標頭與麵包屑 */
@@ -233,16 +244,6 @@ p, dd, li { text-wrap: pretty; }
 .breadcrumb a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .breadcrumb > *:not(:last-child)::after { content: "/"; margin: 0 10px; opacity: 0.5; }
 .pd .breadcrumb { color: var(--muted); margin-bottom: 28px; }
-
-/* 首頁產品分類 */
-.product-cats { background: var(--sand); }
-.cat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px 20px; }
-.cat-tile { text-decoration: none; color: inherit; display: block; }
-.cat-img { display: block; aspect-ratio: 1; background: #fff; overflow: hidden; }
-.cat-img img { width: 100%; height: 100%; object-fit: contain; padding: 8%; transition: transform .5s; }
-.cat-tile:hover .cat-img img { transform: scale(1.05); }
-.cat-name { display: block; margin-top: 14px; font-weight: 700; letter-spacing: 0.08em; }
-.cat-count { display: block; font-size: 0.82rem; color: var(--muted); }
 
 /* 產品列表 */
 .catalog { display: grid; grid-template-columns: 240px 1fr; gap: clamp(28px, 4vw, 56px); align-items: start; }
@@ -389,7 +390,6 @@ p, dd, li { text-wrap: pretty; }
 @media (max-width: 1100px) {
   .site-nav { gap: 24px; }
   .product-grid { grid-template-columns: repeat(3, 1fr); }
-  .cat-grid { grid-template-columns: repeat(4, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 1024px) {
@@ -420,16 +420,15 @@ p, dd, li { text-wrap: pretty; }
   .kicker { font-size: 0.9rem; letter-spacing: 0.04em; }
   .section-head-split { grid-template-columns: 1fr; gap: 16px; }
   .section-head-split > p { justify-self: start; }
-  .about-grid, .contact-grid { grid-template-columns: 1fr; }
+  .about-grid, .contact-main { grid-template-columns: 1fr; }
+  .contact-cards { grid-template-columns: 1fr; gap: 12px; }
   .about-body { padding-top: 0; }
   .case-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 14px; }
   .client { width: 128px; padding: 0 12px; }
   .client img { height: 42px; }
-  .line-card { padding: 32px 24px; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px 24px; }
-  .footer-about, .footer-cats { grid-column: 1 / -1; }
+  .footer-about, .footer-contact { grid-column: 1 / -1; }
   .case-grid-featured { grid-template-columns: repeat(2, 1fr); gap: 32px 14px; }
-  .cat-grid { grid-template-columns: repeat(3, 1fr); gap: 20px 14px; }
   .catalog { grid-template-columns: 1fr; }
   .catalog-side { position: static; }
   .catalog-search { margin-bottom: 12px; }
