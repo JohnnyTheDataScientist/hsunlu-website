@@ -34,7 +34,6 @@ window.SITE_CONTENT = {
     { title: '預防詐騙宣導卡套', category: '宣導品', img: 'anti-fraud-cardholder.webp' },
     { title: 'BNI 雙金質獎章', category: '獎牌獎座', img: 'bni-gold-plaque.webp' },
     { title: '國立臺灣戲曲學院 摺疊扇', category: '宣導品', img: 'opera-fan-pouch.webp' },
-    { title: 'HSUNLU 不鏽鋼隨行杯', category: '杯瓶', img: 'hsunlu-travel-tumbler.webp' },
     { title: '刑警熊玩偶', category: '公仔玩偶', img: 'detective-bear.webp' },
     { title: '扶輪基金會百年紀念馬克杯', category: '杯瓶', img: 'rotary-centennial-mug.webp' },
     { title: '臺中市性別平等國際論壇 雷雕木牌', category: '獎牌獎座', img: 'taichung-forum-plaque.webp' },
