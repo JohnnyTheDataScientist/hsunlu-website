@@ -132,15 +132,6 @@ p, dd, li { text-wrap: pretty; }
 .about-body { padding-top: 38px; }
 .about-body p { color: var(--muted); font-size: 1.04rem; }
 .about-body p + p { margin-top: 1.2em; }
-.stats {
-  display: grid; grid-template-columns: repeat(3, 1fr); margin: clamp(56px, 8vw, 96px) 0 0;
-  border-top: 1px solid var(--rule);
-}
-.stats > div { padding: 32px 32px 0 0; }
-.stats > div + div { border-left: 1px solid var(--rule); padding-left: 32px; }
-.stats dt { font-family: var(--serif); font-size: clamp(1.9rem, 3.4vw, 2.8rem); color: var(--forest); line-height: 1.2; }
-.stats dt span { color: var(--green); font-size: 0.7em; }
-.stats dd { margin: 10px 0 0; color: var(--muted); font-size: 0.93rem; }
 
 /* Services */
 .services { background: var(--sand); }
@@ -267,8 +258,6 @@ p, dd, li { text-wrap: pretty; }
   .section-head-split > p { justify-self: start; }
   .about-grid, .contact-grid { grid-template-columns: 1fr; }
   .about-body { padding-top: 0; }
-  .stats { grid-template-columns: 1fr; }
-  .stats > div, .stats > div + div { border-left: 0; padding: 24px 0; border-bottom: 1px solid var(--rule); }
   .case-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 14px; }
   .client { width: 128px; padding: 0 12px; }
   .client img { height: 42px; }
